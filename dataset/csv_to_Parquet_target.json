@@ -1,0 +1,20 @@
+{
+	"name": "csv_to_Parquet_target",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDL_Connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "parquet_files",
+				"fileSystem": "target"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
