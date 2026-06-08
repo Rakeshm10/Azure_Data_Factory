@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-course-rakeshm"
+		},
+		"AzureDL_Connection_accountKey": {
+			"value": ""
+		},
+		"AzureDL_Connection_properties_typeProperties_url": {
+			"value": "https://storageadfrakesh1005.dfs.core.windows.net/"
+		}
+	}
+}
