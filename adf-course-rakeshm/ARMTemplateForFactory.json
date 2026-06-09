@@ -1235,10 +1235,13 @@
 					],
 					"transformations": [
 						{
-							"name": "alterRow1"
+							"name": "derivedColumn1"
 						},
 						{
-							"name": "derivedColumn1"
+							"name": "select1"
+						},
+						{
+							"name": "window1"
 						}
 					],
 					"scriptLines": [
@@ -1258,19 +1261,9 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> sourceemp",
-						"derivedColumn1 alterRow(insertIf(1==1)) ~> alterRow1",
 						"sourceemp derive(lower_name = lower({First Name}),",
 						"          {lat name} = $last_name) ~> derivedColumn1",
-						"alterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     partitionFileNames:['employee_tgt.csv'],",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     mapColumn(",
-						"          {First Name},",
+						"derivedColumn1 select(mapColumn(",
 						"          Gender,",
 						"          {Start Date},",
 						"          {Last Login Time},",
@@ -1280,6 +1273,31 @@
 						"          Team,",
 						"          lower_name,",
 						"          {lat name}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 window(over(Team),",
+						"     asc(lower_name, true),",
+						"     row_num = rowNumber()) ~> window1",
+						"window1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['employee_tgt.csv'],",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          Gender,",
+						"          {Start Date},",
+						"          {Last Login Time},",
+						"          Salary,",
+						"          {Bonus %},",
+						"          {Senior Management},",
+						"          Team,",
+						"          lower_name,",
+						"          {lat name},",
+						"          row_num",
 						"     ),",
 						"     partitionBy('hash', 1)) ~> sinkemp"
 					]
