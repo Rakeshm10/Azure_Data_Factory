@@ -19,11 +19,11 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
-		"trigger_storage_event_properties_typeProperties_scope": {
+		"trigger2_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
 		},
-		"trigger2_properties_typeProperties_scope": {
+		"trigger_storage_event_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
 		},
@@ -63,11 +63,11 @@
 					"Git_connection_properties_typeProperties_url": {
 						"value": "[parameters('Git_connection_properties_typeProperties_url')]"
 					},
-					"trigger_storage_event_properties_typeProperties_scope": {
-						"value": "[parameters('trigger_storage_event_properties_typeProperties_scope')]"
-					},
 					"trigger2_properties_typeProperties_scope": {
 						"value": "[parameters('trigger2_properties_typeProperties_scope')]"
+					},
+					"trigger_storage_event_properties_typeProperties_scope": {
+						"value": "[parameters('trigger_storage_event_properties_typeProperties_scope')]"
 					}
 				}
 			},
