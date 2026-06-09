@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow_emp_src_tgt",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"last_name": {
+								"value": "'@{'not a singh'}'",
+								"type": "Expression"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
