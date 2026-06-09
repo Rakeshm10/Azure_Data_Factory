@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "emp_tgt",
+						"referenceName": "emp_tgt1",
 						"type": "DatasetReference"
 					},
 					"name": "sinkemp"
@@ -42,7 +42,17 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkemp"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          {First Name},",
+				"          Gender,",
+				"          {Start Date},",
+				"          {Last Login Time},",
+				"          Salary,",
+				"          {Bonus %},",
+				"          {Senior Management},",
+				"          Team",
+				"     )) ~> sinkemp"
 			]
 		}
 	}
