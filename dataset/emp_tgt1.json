@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "part-00000-3abbfe83-b9eb-45e2-9c4c-85ed9ac07f1c-c000.csv",
+				"fileName": "emp_tgt",
 				"folderPath": "csv_files",
 				"fileSystem": "target"
 			},

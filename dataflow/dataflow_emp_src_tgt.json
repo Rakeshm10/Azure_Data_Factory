@@ -21,7 +21,11 @@
 					"name": "sinkemp"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "alterRow1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          {First Name} as string,",
@@ -36,7 +40,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceemp",
-				"sourceemp sink(allowSchemaDrift: true,",
+				"sourceemp alterRow(insertIf(1 ==1)) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     umask: 0022,",
 				"     preCommands: [],",
