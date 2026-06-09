@@ -58,14 +58,16 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          {First Name} = {},",
+				"          {First Name},",
 				"          Gender,",
 				"          {Start Date},",
 				"          {Last Login Time},",
 				"          Salary,",
 				"          {Bonus %},",
 				"          {Senior Management},",
-				"          Team",
+				"          Team,",
+				"          lower_name,",
+				"          {lat name}",
 				"     ),",
 				"     partitionBy('hash', 1)) ~> sinkemp"
 			]
