@@ -495,6 +495,9 @@
 						},
 						{
 							"name": "window1"
+						},
+						{
+							"name": "rank1"
 						}
 					],
 					"scriptLines": [
@@ -532,7 +535,11 @@
 						"select1 window(over(Team),",
 						"     asc(lower_name, true),",
 						"     row_num = rowNumber()) ~> window1",
-						"window1 sink(allowSchemaDrift: true,",
+						"window1 rank(desc(Salary, true),",
+						"     caseInsensitive: true,",
+						"     output(rank_col as long),",
+						"     partitionBy('hash', 1)) ~> rank1",
+						"rank1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     partitionFileNames:['employee_tgt.csv'],",
 						"     umask: 0022,",
@@ -550,7 +557,8 @@
 						"          Team,",
 						"          lower_name,",
 						"          {lat name},",
-						"          row_num",
+						"          row_num,",
+						"          rank_col",
 						"     ),",
 						"     partitionBy('hash', 1)) ~> sinkemp"
 					]
