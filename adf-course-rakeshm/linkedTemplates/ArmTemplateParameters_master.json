@@ -17,6 +17,9 @@
 		"trigger_storage_event_properties_typeProperties_scope": {
 			"value": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
 		},
+		"trigger2_properties_typeProperties_scope": {
+			"value": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
+		},
 		"containerUri": {
 			"value": ""
 		},
