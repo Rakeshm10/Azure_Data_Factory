@@ -498,6 +498,9 @@
 						},
 						{
 							"name": "rank1"
+						},
+						{
+							"name": "surrogateKey1"
 						}
 					],
 					"scriptLines": [
@@ -539,7 +542,11 @@
 						"     caseInsensitive: true,",
 						"     output(rank_col as long),",
 						"     partitionBy('hash', 1)) ~> rank1",
-						"rank1 sink(allowSchemaDrift: true,",
+						"rank1 keyGenerate(output({emp id} as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L,",
+						"     partitionBy('hash', 1)) ~> surrogateKey1",
+						"surrogateKey1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     partitionFileNames:['employee_tgt.csv'],",
 						"     umask: 0022,",
@@ -558,7 +565,8 @@
 						"          lower_name,",
 						"          {lat name},",
 						"          row_num,",
-						"          rank_col",
+						"          rank_col,",
+						"          {emp id}",
 						"     ),",
 						"     partitionBy('hash', 1)) ~> sinkemp"
 					]
