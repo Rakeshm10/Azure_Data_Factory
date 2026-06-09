@@ -1,5 +1,5 @@
 {
-	"name": "netflix_csv_files",
+	"name": "netflix_getmeta",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDL_Connection",
@@ -19,8 +19,8 @@
 					"value": "@dataset().file_name",
 					"type": "Expression"
 				},
-				"folderPath": "csv_netflix_files",
-				"fileSystem": "netflix-files-reporting"
+				"folderPath": "csv_files",
+				"fileSystem": "target"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
