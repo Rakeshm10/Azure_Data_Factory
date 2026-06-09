@@ -10,6 +10,9 @@
 		},
 		"AzureDL_Connection_properties_typeProperties_url": {
 			"value": "https://storageadfrakesh1005.dfs.core.windows.net/"
+		},
+		"Git_connection_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com"
 		}
 	}
 }
