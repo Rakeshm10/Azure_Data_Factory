@@ -1,0 +1,49 @@
+{
+	"name": "dataflow_emp_src_tgt",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employee",
+						"type": "DatasetReference"
+					},
+					"name": "sourceemp"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "emp_tgt",
+						"type": "DatasetReference"
+					},
+					"name": "sinkemp"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          {First Name} as string,",
+				"          Gender as string,",
+				"          {Start Date} as date,",
+				"          {Last Login Time} as string,",
+				"          Salary as integer,",
+				"          {Bonus %} as double,",
+				"          {Senior Management} as boolean,",
+				"          Team as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceemp",
+				"sourceemp sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkemp"
+			]
+		}
+	}
+}
