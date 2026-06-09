@@ -1,0 +1,24 @@
+{
+	"name": "trigger_storage_event",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline_sample_dataflow",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/source/blobs/csvfiles/employees.csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
