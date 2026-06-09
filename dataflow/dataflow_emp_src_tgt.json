@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "emp_tgt1",
+						"referenceName": "emp_tgt_2",
 						"type": "DatasetReference"
 					},
 					"name": "sinkemp"
@@ -43,6 +43,7 @@
 				"sourceemp alterRow(insertIf(1 ==1)) ~> alterRow1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['employee_tgt.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
@@ -57,7 +58,8 @@
 				"          {Bonus %},",
 				"          {Senior Management},",
 				"          Team",
-				"     )) ~> sinkemp"
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sinkemp"
 			]
 		}
 	}

@@ -1,5 +1,5 @@
 {
-	"name": "emp_tgt1",
+	"name": "emp_tgt_2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDL_Connection",
@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "emp_tgt.csv",
 				"folderPath": "csv_files",
 				"fileSystem": "target"
 			},
