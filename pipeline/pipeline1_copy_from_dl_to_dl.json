@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "pipeline1_copy_from_dl_to_dl",
 	"properties": {
 		"activities": [
 			{
