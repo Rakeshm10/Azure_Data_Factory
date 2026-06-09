@@ -562,7 +562,12 @@
 							"dataflow": {
 								"referenceName": "dataflow_emp_src_tgt",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"last_name": {
+										"value": "'@{'not a singh'}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"sourceemp": {},
 									"sinkemp": {}
