@@ -32,8 +32,56 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "load",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "last_cdc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{activity('last_cdc').outputvalue[0].cdc_timestamp}'",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "orders",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
+		"parameters": {
+			"schema_name": {
+				"type": "string",
+				"defaultValue": "source"
+			},
+			"table_name": {
+				"type": "string",
+				"defaultValue": "orders"
+			}
+		},
 		"annotations": []
 	}
 }
