@@ -1111,7 +1111,39 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"schema_name": "source",
-								"table_name": "orders"
+								"table_name": "order"
+							}
+						}
+					},
+					{
+						"name": "alters",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline ingestion",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": {
+								"value": "https://prod-20.northcentralus.logic.azure.com:443/workflows/66d5e35759ef42968dc56e99ee9fc350/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=DUoccqkyjbbYro9_3K6eNDOoZjz8eZ3zToNIgSIVMUs",
+								"type": "Expression"
+							},
+							"body": {
+								"value": "{\n    \"pipeline_runID\" : \"@{pipeline().RunId}\",\n    \"pipeline_name\"  : \"@{pipeline().Pipeline}\"\n}",
+								"type": "Expression"
 							}
 						}
 					}
@@ -2023,6 +2055,37 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/employee')]",
 				"[concat(variables('factoryId'), '/datasets/emp_tgt_2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/notification trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline_scheduled",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15,
+						"startTime": "2026-06-10T15:37:00",
+						"endTime": "2026-06-10T15:42:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline_scheduled')]"
 			]
 		}
 	]
