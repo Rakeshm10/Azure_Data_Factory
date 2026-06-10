@@ -1,0 +1,20 @@
+{
+	"name": "API_to_Json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDL_Connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "pokemon.json",
+				"folderPath": "API_data",
+				"fileSystem": "target"
+			}
+		},
+		"schema": {}
+	}
+}
