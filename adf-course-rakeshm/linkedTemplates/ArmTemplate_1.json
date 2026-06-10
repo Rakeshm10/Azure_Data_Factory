@@ -862,7 +862,7 @@
 								{
 									"type": "Query",
 									"text": {
-										"value": "select count(*) as total_count from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{activity('last_cdc').output.value[0].cdc_timestamp}'",
+										"value": "select count(*) as total_count from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{if(empty(pipeline().parameters.backdate),activity('last_cdc').output.value[0].cdc_timestamp,pipeline().parameters.backdate)}'",
 										"type": "Expression"
 									}
 								}
@@ -889,7 +889,7 @@
 							},
 							"ifTrueActivities": [
 								{
-									"name": "load_copy1",
+									"name": "load_copy",
 									"type": "Copy",
 									"state": "Active",
 									"onInactiveMarkAs": "Succeeded",
@@ -906,7 +906,7 @@
 										"source": {
 											"type": "AzureSqlSource",
 											"sqlReaderQuery": {
-												"value": "select * from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{activity('last_cdc').output.value[0].cdc_timestamp}'",
+												"value": "select * from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{if(empty(pipeline().parameters.backdate),activity('last_cdc').output.value[0].cdc_timestamp,pipeline().parameters.backdate)}'",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -1017,7 +1017,7 @@
 									"type": "Script",
 									"dependsOn": [
 										{
-											"activity": "load_copy1",
+											"activity": "load_copy",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -1063,6 +1063,9 @@
 					"table_name": {
 						"type": "string",
 						"defaultValue": "orders"
+					},
+					"backdate": {
+						"type": "string"
 					}
 				},
 				"annotations": []
