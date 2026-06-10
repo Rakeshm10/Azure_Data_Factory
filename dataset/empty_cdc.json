@@ -1,0 +1,20 @@
+{
+	"name": "empty_cdc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDL_Connection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "empty.json",
+				"folderPath": "monitor",
+				"fileSystem": "source"
+			}
+		},
+		"schema": {}
+	}
+}
