@@ -1322,7 +1322,14 @@
 					{
 						"name": "Get Metadata files",
 						"type": "GetMetadata",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Validate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1621,6 +1628,25 @@
 									}
 								}
 							]
+						}
+					},
+					{
+						"name": "Validate",
+						"type": "Validation",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "dataset_customer_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"p_conatiner": "source",
+									"p_folder": "trigger",
+									"p_filename": "locations.csv"
+								}
+							},
+							"timeout": "0.12:00:00",
+							"sleep": 10
 						}
 					}
 				],
