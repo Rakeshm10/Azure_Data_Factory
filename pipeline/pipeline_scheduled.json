@@ -1,0 +1,28 @@
+{
+	"name": "pipeline_scheduled",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline ingestion",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline_ingestion",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema_name": "source",
+						"table_name": "orders"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
