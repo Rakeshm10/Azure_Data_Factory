@@ -11,9 +11,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDL_Connection'"
 		},
+		"AzureSqlDatabase_connection_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase_connection'"
+		},
 		"AzureDL_Connection_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageadfrakesh1005.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dfadvanceserver.database.windows.net"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "df-db"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "rakesh"
 		},
 		"Git_connection_properties_typeProperties_url": {
 			"type": "string",
@@ -57,8 +73,20 @@
 					"AzureDL_Connection_accountKey": {
 						"value": "[parameters('AzureDL_Connection_accountKey')]"
 					},
+					"AzureSqlDatabase_connection_password": {
+						"value": "[parameters('AzureSqlDatabase_connection_password')]"
+					},
 					"AzureDL_Connection_properties_typeProperties_url": {
 						"value": "[parameters('AzureDL_Connection_properties_typeProperties_url')]"
+					},
+					"AzureSqlDatabase_connection_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase_connection_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase_connection_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_userName')]"
 					},
 					"Git_connection_properties_typeProperties_url": {
 						"value": "[parameters('Git_connection_properties_typeProperties_url')]"

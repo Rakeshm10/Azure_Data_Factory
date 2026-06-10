@@ -11,9 +11,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDL_Connection'"
 		},
+		"AzureSqlDatabase_connection_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase_connection'"
+		},
 		"AzureDL_Connection_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageadfrakesh1005.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dfadvanceserver.database.windows.net"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "df-db"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "rakesh"
 		},
 		"Git_connection_properties_typeProperties_url": {
 			"type": "string",
@@ -649,6 +665,54 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_ingestion')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "last_cdc",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "cdc_timestamp",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/cdc_timestamp')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline_multi_pipelines')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -865,6 +929,31 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/metadatads')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cdc_timestamp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDL_Connection",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "cdc.json",
+						"folderPath": "monitor",
+						"fileSystem": "source"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDL_Connection')]"
 			]
 		},
 		{
@@ -1381,6 +1470,28 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('AzureDL_Connection_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase_connection')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase_connection_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase_connection_password')]"
 					}
 				}
 			},

@@ -8,8 +8,20 @@
 		"AzureDL_Connection_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase_connection_password": {
+			"value": ""
+		},
 		"AzureDL_Connection_properties_typeProperties_url": {
 			"value": "https://storageadfrakesh1005.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_server": {
+			"value": "dfadvanceserver.database.windows.net"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_database": {
+			"value": "df-db"
+		},
+		"AzureSqlDatabase_connection_properties_typeProperties_userName": {
+			"value": "rakesh"
 		},
 		"Git_connection_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com"
