@@ -105,7 +105,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "select * from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{activity('last_cdc').outputvalue[0].cdc_timestamp}'",
+										"value": "select * from @{pipeline().parameters.schema_name}.@{pipeline().parameters.table_name} where last_updated > '@{activity('last_cdc').output.value[0].cdc_timestamp}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
