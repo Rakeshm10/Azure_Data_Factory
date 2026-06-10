@@ -26,6 +26,9 @@
 		"Git_connection_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com"
 		},
+		"Rest_API_Connection_properties_typeProperties_url": {
+			"value": " https://pokeapi.co/api/v2/pokemon"
+		},
 		"trigger2_properties_typeProperties_scope": {
 			"value": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
 		},

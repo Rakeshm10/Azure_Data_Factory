@@ -35,6 +35,10 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
 		},
+		"Rest_API_Connection_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": " https://pokeapi.co/api/v2/pokemon"
+		},
 		"trigger2_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a2688eea-3379-4c1a-a78c-d522a44487ef/resourceGroups/rg-adf-course/providers/Microsoft.Storage/storageAccounts/storageadfrakesh1005"
@@ -91,6 +95,9 @@
 					"Git_connection_properties_typeProperties_url": {
 						"value": "[parameters('Git_connection_properties_typeProperties_url')]"
 					},
+					"Rest_API_Connection_properties_typeProperties_url": {
+						"value": "[parameters('Rest_API_Connection_properties_typeProperties_url')]"
+					},
 					"trigger2_properties_typeProperties_scope": {
 						"value": "[parameters('trigger2_properties_typeProperties_scope')]"
 					},
@@ -119,6 +126,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'adf-course-rakeshm_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf-course-rakeshm_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-course-rakeshm_ArmTemplate_1')]"
 			]
 		}
 	]
