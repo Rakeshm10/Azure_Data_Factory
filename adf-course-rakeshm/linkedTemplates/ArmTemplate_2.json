@@ -13,6 +13,117 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_emp_src_tgt')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "employee",
+								"type": "DatasetReference"
+							},
+							"name": "sourceemp"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "emp_tgt_2",
+								"type": "DatasetReference"
+							},
+							"name": "sinkemp"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "rank1"
+						},
+						{
+							"name": "surrogateKey1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     last_name as string ('singh')",
+						"}",
+						"source(output(",
+						"          {First Name} as string,",
+						"          Gender as string,",
+						"          {Start Date} as date,",
+						"          {Last Login Time} as string,",
+						"          Salary as integer,",
+						"          {Bonus %} as double,",
+						"          {Senior Management} as boolean,",
+						"          Team as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceemp",
+						"sourceemp derive(lower_name = lower({First Name}),",
+						"          {lat name} = $last_name) ~> derivedColumn1",
+						"derivedColumn1 select(mapColumn(",
+						"          Gender,",
+						"          {Start Date},",
+						"          {Last Login Time},",
+						"          Salary,",
+						"          {Bonus %},",
+						"          {Senior Management},",
+						"          Team,",
+						"          lower_name,",
+						"          {lat name}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 window(over(Team),",
+						"     asc(lower_name, true),",
+						"     row_num = rowNumber()) ~> window1",
+						"window1 rank(desc(Salary, true),",
+						"     caseInsensitive: true,",
+						"     output(rank_col as long)) ~> rank1",
+						"rank1 keyGenerate(output({emp id} as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey1",
+						"surrogateKey1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['employee_tgt.csv'],",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          Gender,",
+						"          {Start Date},",
+						"          {Last Login Time},",
+						"          Salary,",
+						"          {Bonus %},",
+						"          {Senior Management},",
+						"          Team,",
+						"          lower_name,",
+						"          {lat name},",
+						"          row_num,",
+						"          rank_col,",
+						"          {emp id}",
+						"     ),",
+						"     partitionBy('hash', 1)) ~> sinkemp"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline_multi_pipelines')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -147,7 +258,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow_emp_src_tgt')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline_scheduled')]",
