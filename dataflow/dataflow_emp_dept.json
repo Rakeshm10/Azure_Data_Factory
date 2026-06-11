@@ -81,7 +81,7 @@
 				"select derive(dept_id = iif(isNull(dept_id), 22, dept_id),",
 				"          dept_name = iif(dept_id == 22,'finance',dept_name),",
 				"          location = iif(dept_id == 22,'banaglore',location)) ~> derivedColumn1",
-				"derivedColumn1 alterRow(updateIf(1 == 1)) ~> alterRow1",
+				"derivedColumn1 alterRow(upsertIf(1==1)) ~> alterRow1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -92,16 +92,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          emp_id,",
-				"          emp_name,",
-				"          email,",
-				"          salary,",
-				"          dept_id,",
-				"          dept_name,",
-				"          location",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
