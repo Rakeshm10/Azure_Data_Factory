@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -78,12 +81,14 @@
 				"select derive(dept_id = iif(isNull(dept_id), 22, dept_id),",
 				"          dept_name = iif(dept_id == 22,'finance',dept_name),",
 				"          location = iif(dept_id == 22,'banaglore',location)) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 alterRow(updateIf(1 == 1)) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
-				"     insertable:true,",
+				"     insertable:false,",
 				"     updateable:false,",
-				"     upsertable:false,",
+				"     upsertable:true,",
+				"     keys:['emp_id'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
