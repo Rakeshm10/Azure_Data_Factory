@@ -14,7 +14,11 @@
 			],
 			"sinks": [
 				{
-					"name": "sink1"
+					"linkedService": {
+						"referenceName": "AzureDL_Connection",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sinkDelta"
 				}
 			],
 			"transformations": [
@@ -51,11 +55,26 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 alterRow(upsertIf(1 ==1)) ~> alterRow",
+				"select1 alterRow(upsertIf(1==1)) ~> alterRow",
 				"alterRow sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'target',",
+				"     folderPath: 'DeltsSink',",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: false,",
+				"     updateable: false,",
+				"     upsertable: true,",
+				"     keys:['location_id'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sinkDelta"
 			]
 		}
 	}
